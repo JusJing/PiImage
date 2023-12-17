@@ -1,1 +1,2 @@
 * * * * * nohup ./runDup.sh &
+# run it every minute
