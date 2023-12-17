@@ -1,0 +1,1 @@
+* * * * * nohup /home/pi/tools/runDup.sh &
