@@ -35,6 +35,11 @@ Setup Apache Document Server Through The [Apache Official Guide](https://httpd.a
 ```
 sudo ./httpd -k start 
 ```
+### My Apache Server URL/Config
+```
+http://192.168.1.2:90/piimages/
+Alias /piimages/ "/home/pi/servers/pidocs/piimages/"
+```
 ### My Apache Document Server Folder Structure
 <img width="292" alt="屏幕截图 2023-12-16 165048" src="https://github.com/JusJing/PiImage/assets/124528112/8715cb18-f13d-4614-9416-2fd3b8729880">
 
