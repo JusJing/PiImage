@@ -3,7 +3,10 @@
 These documents encompass the capture and prediction of images using a Raspberry Pi, along with image processing tasks such as duplicate removal, resizing, and a document server for convenient file access.
 
 # Resolution Settings Through Web Server 
-Start Web Server In Back End: nohup python ImgResolution.py &
+Start Web Server In Backend: 
+```
+nohup python ImgResolution.py &
+```
 Set Resolution Through API: http://192.168.1.2:5000/setResolution?resolution=800*600
     
     Sample Response: 
