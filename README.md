@@ -7,6 +7,13 @@ Start Web Server In Backend:
 ```
 nohup python ImgResolution.py &
 ```
+```
+ps -ef |grep ImgResolution # Check Backend Process
+Console Output:
+pi          1983       1  0 01:48 ?        00:00:00 python ImgResolution.py
+pi          1995    1983 42 01:48 ?        00:01:22 /usr/bin/python /home/pi/ImgResolution.py
+```
+
 Set Resolution Through API: http://192.168.1.2:5000/setResolution?resolution=800*600
     
     Sample Response: 
