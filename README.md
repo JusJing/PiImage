@@ -2,7 +2,11 @@
 
 These documents encompass the capture and prediction of images using a Raspberry Pi, along with image processing tasks such as duplicate removal, resizing, and a document server for convenient file access.
 
-Components Overview
+### Process Overview
+![Flowcharts](https://github.com/JusJing/PiImage/assets/124528112/b3f7c457-5cd5-4834-b6b7-2feddcffa76d)
+
+
+### Components Overview
 ![FlowChart-Overview](https://github.com/JusJing/PiImage/assets/124528112/2e2087fa-219c-41e9-b9b4-a9c7058182e4)
 
 
