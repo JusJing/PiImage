@@ -2,6 +2,10 @@
 
 These documents encompass the capture and prediction of images using a Raspberry Pi, along with image processing tasks such as duplicate removal, resizing, and a document server for convenient file access.
 
+Components Overview
+![FlowChart-Overview](https://github.com/JusJing/PiImage/assets/124528112/2e2087fa-219c-41e9-b9b4-a9c7058182e4)
+
+
 # Pi Image Web Server
 Start Web Server In Backend: 
 ```
@@ -9,10 +13,10 @@ start by command: nohup python ImageServer.py &
 or run init.sh
 ```
 ```
-ps -ef |grep ImgResolution # Check Backend Process
+ps -ef |grep ImageServer # Check Backend Process
 Console Output:
-pi          1983       1  0 01:48 ?        00:00:00 python ImgResolution.py
-pi          1995    1983 42 01:48 ?        00:01:22 /usr/bin/python /home/pi/ImgResolution.py
+pi          1983       1  0 01:48 ?        00:00:00 python ImageServer.py
+pi          1995    1983 42 01:48 ?        00:01:22 /usr/bin/python /home/pi/ImageServer.py
 ```
 ### Set/Get Resolution
 Set Resolution Through API: http://192.168.1.2:5000/setResolution?resolution=800*600
