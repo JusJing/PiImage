@@ -1,15 +1,60 @@
 from flask import Flask, request, jsonify, send_from_directory
 import subprocess
 import os
+from datetime import datetime
+import json
+import asyncio
 
 app = Flask(__name__)
 
 IMAGE_DIRECTORY = 'pi'
 
-@app.route('/imageCapture', methods=['GET'])
+metadata_suffix = '_metadata.json'
+
+async def run_subprocess(command):
+    # Create a subprocess using asyncio.subprocess
+    process = await asyncio.create_subprocess_shell(
+        command,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE
+    )
+
+    # Wait for the subprocess to complete
+    stdout, stderr = await process.communicate()
+
+    # Print the output
+    print(f"Command: {command}")
+    if process.returncode == 0:
+        print(f"Success! Output:\n{stdout.decode()}")
+    else:
+        print(f"Error! Return code: {process.returncode}\n{stderr.decode()}")
+
+def get_files_by_extension(path, extension):
+    file_list = []
+    for file_name in os.listdir(path):
+        if file_name.endswith(extension):
+            file_list.append(file_name)
+    return file_list
+
+def save_metadata(filename,metadata):
+    if metadata != None:
+        with open(filename, "w") as f: 
+            json.dump(metadata, f, indent=2)  # The indent parameter is optional and adds formatting for better readability
+
+@app.route('/imageCapture', methods=['POST'])
 def call_external_program():
+    # Get the raw body of the POST request
+    raw_data = request.data
+    # If the data is JSON, you can parse it using request.get_json()
+    json_data = request.get_json()
+    now = datetime.now()
+    date_time = now.strftime("%Y_%m_%d_%H:%M:%S")
+    image_filename = "pi" + date_time + ".jpg"
+    metadata_filename = IMAGE_DIRECTORY + "/pi" + date_time + metadata_suffix
+    save_metadata(metadata_filename,json_data)
+    capture_image_parameter = '-f ' + image_filename
     try:
-        result = subprocess.check_output(['python3', 'ImageCapture.py'], universal_newlines=True)
+        result = subprocess.check_output(['python3', 'ImageCapture.py',capture_image_parameter], universal_newlines=True)
         return jsonify({'status': 'success'})
     except Exception as e:
         return jsonify({'status': 'error', 'error_message': str(e)})
@@ -32,11 +77,20 @@ def download_image():
     # Send the file for download
     return send_from_directory(IMAGE_DIRECTORY, filename, as_attachment=True)
 
-@app.route('/listImages', methods=['GET'])
+@app.route('/listFiles', methods=['GET'])
 def list_files():
     # Get the list of files in the specified directory
     try:
         files = [f for f in os.listdir(IMAGE_DIRECTORY) if os.path.isfile(os.path.join(IMAGE_DIRECTORY, f))]
+        return jsonify({'files': files})
+    except Exception as e:
+        return jsonify({'error': f'Error listing files: {str(e)}'})
+
+@app.route('/listImages', methods=['GET'])
+def list_images():
+    # Get the list of files in the specified directory
+    try:
+        files = get_files_by_extension(IMAGE_DIRECTORY,'.jpg')
         return jsonify({'files': files})
     except Exception as e:
         return jsonify({'error': f'Error listing files: {str(e)}'})
@@ -76,6 +130,24 @@ def getResolution():
 
     # Return the result as JSON
     return jsonify({'resolutionValue': result})
+
+
+@app.route('/predict', methods=['POST'])
+async def predict():
+     try:
+        # Specify the command you want to run asynchronously
+        command = "python3 ImagePredict.py"  # Replace this with your desired command
+        # Run the subprocess asynchronously
+        await run_subprocess(command)
+        return jsonify({'status': 'predict triggered'})
+     except Exception as e:
+        return jsonify({'status': 'error', 'error_message': str(e)})
+         
+    
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0', port=5000)
+
+
+
+
 

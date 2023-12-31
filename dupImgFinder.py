@@ -3,28 +3,50 @@
 import os
 from PIL import Image, ImageStat
 import shutil
+import argparse
+
+# Initialize parser
+parser = argparse.ArgumentParser()
+ 
+# Adding optional argument
+parser.add_argument("-s", "--sourcedir", help = "Image files directory")
+parser.add_argument("-t", "--dupdir", help = "duplicate Image files directory")
+parser.add_argument("-dt", "--diffthreshold", help = "duplicate Image files directory")
+ 
+# Read arguments from command line
+args = parser.parse_args()
+
+if args.sourcedir:
+    print("Displaying source dir as: % s" % args.sourcedir)
+    image_folder = args.sourcedir.strip()
+else:
+    image_folder = r'pi' 
+    
+if args.dupdir:
+    print("Displaying duplicate dir as: % s" % args.dupdir)
+    duplicate_folder = args.dupdir.strip()
+else:
+    duplicate_folder = r'duplicate'   
+
+if args.diffthreshold:
+    print("Displaying diffthreshold as: % s" % args.diffthreshold)
+    diff_threshold = int(args.diffthreshold.strip())
+else:
+    diff_threshold = 5    
+
 
 '''
 The script takes the RMS value of an image and compares it to another image's RMS value. If the difference between the two images is less than 1 (calculated in the function 'average_diff') then the images are considered the same, and the duplicate is moved to the duplicates folder.
 '''
-image_folder = r'/home/pi/servers/pidocs/piimages/pi' # not yet recursive
-duplicate_folder = r'/home/pi/servers/pidocs/piimages/duplicate'
+
 image_files = []
 rms_pixels = []
-diff_threshold = 5
+
 # create directory for duplicates if it does not exist
 if not os.path.exists(duplicate_folder):
     os.makedirs(duplicate_folder)
 
 #Function calculates the difference between the CURRENT image file RMS value and RMS values calculated at start
-'''
-def average_diff(v1, v2):
-    duplicate = False
-    calculated_rms_difference = [v1[0]-v2[0], v1[1]-v2[1], v1[2]-v2[2]]
-    if calculated_rms_difference[0] < 0.01 and calculated_rms_difference[0] > -0.01 and calculated_rms_difference[1] < 0.01 and calculated_rms_difference[1] > -0.01 and calculated_rms_difference[2] < 0.01 and calculated_rms_difference[2] > -0.01:
-        duplicate = True
-    return duplicate
-'''
 
 def average_diff(v1, v2):
     duplicate = False
