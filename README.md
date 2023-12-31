@@ -67,25 +67,6 @@ Sample Response:
 http://192.168.1.2:5000/downloadImage?filename=pi_2023_12_30_01:27:32.jpg
 ```
 
-# Apache HTTPD Document Server
-Setup Apache Document Server Through The [Apache Official Guide](https://httpd.apache.org/docs/)
-### How To Start Apache Server
-```
-sudo ./httpd -k start 
-```
-### My Apache Server URL/Config
-```
-http://192.168.1.2:90/piimages/
-Alias /piimages/ "/home/pi/servers/pidocs/piimages/"
-```
-### My Apache Document Server Folder Structure
-<img width="292" alt="屏幕截图 2023-12-16 165048" src="https://github.com/JusJing/PiImage/assets/124528112/8715cb18-f13d-4614-9416-2fd3b8729880">
-
-
- - Folder **pi**: Images Captured By the Orignal Raspberry Pi Camera
- - Folder **duplicate**: Duplicated Pictures That are Removed From The **pi** Folder After Being Detected From [Root-Mean-Square Difference](https://www.thedigitalpictureframe.com/how-to-automatically-remove-duplicate-images-from-your-digital-frame-photo-library/)
- - Folder **compressed**: Resized pictures of what is remained from Folder **pi** through [Jpegoptim](https://linuxhint.com/compress-raspberry-pi-images-size-using-jpegoptim/)
-
 # Pi Image Capture/Predict
 ### Image Capture
 Image is captured by pi camera with a designated resolution that can be adjusted through web server api.
