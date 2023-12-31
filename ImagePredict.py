@@ -18,6 +18,7 @@ import cv2
 import opencv_jupyter_ui as jcv2
 import requests
 import json
+from pathlib import Path
 
 
 IMG_DIR = "pi"
@@ -27,21 +28,28 @@ metadata_suffix = '_metadata.json'
 predict_field_name = 'predict'
 
 def save_predict_result(file_path,result):
-    with open(file_path, 'r') as file:
-        data = json.load(file)
-        data[predict_field_name] = str(result)
-        print(data)
+    if Path(file_path).exists():
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+            data[predict_field_name] = str(result)
+            save_metadata(file_path,data)
+    else:
+        print("metadata does not exist, create metadata file and save predict result.")
+        data = {predict_field_name:str(result)}
         save_metadata(file_path,data)
-
+        
 def get_predict(file_path):
-    print(file_path)
-    with open(file_path, 'r') as file:
-        data = json.load(file)
-        if predict_field_name in data:
-            return True
-        else:
-            return False
-
+    if Path(file_path).exists():
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+            if predict_field_name in data:
+                return True
+            else:
+                return False
+    else:
+        print("metadata does not exist, return False.")
+        return False
+        
 def get_files_by_extension(path, extension):
     file_list = []
     for file_name in os.listdir(path):

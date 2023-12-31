@@ -29,6 +29,13 @@ async def run_subprocess(command):
     else:
         print(f"Error! Return code: {process.returncode}\n{stderr.decode()}")
 
+def get_files_by_extension(path, extension):
+    file_list = []
+    for file_name in os.listdir(path):
+        if file_name.endswith(extension):
+            file_list.append(file_name)
+    return file_list
+
 def save_metadata(filename,metadata):
     if metadata != None:
         with open(filename, "w") as f: 
