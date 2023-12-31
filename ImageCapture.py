@@ -5,7 +5,21 @@ import time
 import requests
 import json
 from datetime import datetime
+import argparse
 
+# Initialize parser
+parser = argparse.ArgumentParser()
+ 
+# Adding optional argument
+parser.add_argument("-f", "--filename", help = "Image Filename")
+ 
+# Read arguments from command line
+args = parser.parse_args()
+
+filename = args.filename
+
+if args.filename:
+    print("Displaying filename as: % s" % args.filename)
 
 image_prefix = 'pi_'
 image_suffix = '.jpg'
@@ -43,7 +57,10 @@ def capture_image(filename):
     picam2.capture_file(ImgOutput + "/" + filename)
     #picam2.stop_()
 
-now = datetime.now()
-date_time = now.strftime("%Y_%m_%d_%H:%M:%S")
-filename = image_prefix + date_time + image_suffix
+if filename == None:
+    now = datetime.now()
+    date_time = now.strftime("%Y_%m_%d_%H:%M:%S")
+    filename = image_prefix + date_time + image_suffix
+
+print(filename)    
 capture_image(filename)

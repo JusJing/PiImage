@@ -23,6 +23,36 @@ import json
 IMG_DIR = "pi"
 MODEL_FILE='color_svm_9_3.sav'
 IMG_SIZE=50
+metadata_suffix = '_metadata.json'
+predict_field_name = 'predict'
+
+def save_predict_result(file_path,result):
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+        data[predict_field_name] = str(result)
+        print(data)
+        save_metadata(file_path,data)
+
+def get_predict(file_path):
+    print(file_path)
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+        if predict_field_name in data:
+            return True
+        else:
+            return False
+
+def get_files_by_extension(path, extension):
+    file_list = []
+    for file_name in os.listdir(path):
+        if file_name.endswith(extension):
+            file_list.append(file_name)
+    return file_list
+
+def save_metadata(filename,metadata):
+    if metadata != None:
+        with open(filename, "w") as f: 
+            json.dump(metadata, f, indent=2)  # The indent parameter is optional and adds formatting for better readability
 
 def get_image(image_path):
     image = cv2.imread(image_path)
@@ -112,13 +142,21 @@ def predict(path, img):
     else:
         print("The image file is not JPG file")
 
+           
+
 try:
-    files = [f for f in os.listdir(IMG_DIR) if os.path.isfile(os.path.join(IMG_DIR, f))]
+    files = get_files_by_extension(IMG_DIR,'.jpg') 
     for f in files:
-        print("predicting image "+ f)
-        print(predict(IMG_DIR, f))    
+        base_name, _ = os.path.splitext(f)
+        metadata_filename = IMG_DIR + '/'+ base_name.strip() + metadata_suffix
+        predicted = get_predict(metadata_filename)
+        if not(predicted):
+            print("predicting image "+ f)
+            predict_result = predict(IMG_DIR,f)
+            print(predict_result)
+            save_predict_result(metadata_filename,predict_result)    
 except Exception as e:
-        print(jsonify({'error': f'Error listing files: {str(e)}'}))
+        print('error')
 
 
 
