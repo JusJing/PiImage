@@ -8,7 +8,8 @@ These documents encompass the capture and prediction of images using a Raspberry
 
 
 ### Components Overview
-![FlowChart-Overview](https://github.com/JusJing/PiImage/assets/124528112/2e2087fa-219c-41e9-b9b4-a9c7058182e4)
+![FlowChart](https://github.com/JusJing/PiImage/assets/124528112/e0917915-4d61-40a7-89dd-98b949c331e1)
+
 
 
 # Pi Image Web Server
