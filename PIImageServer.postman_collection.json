@@ -32,29 +32,19 @@
 			"response": []
 		},
 		{
-			"name": "GetResolution",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://{{ServerIP}}:5000/getResolution",
-					"protocol": "http",
-					"host": [
-						"{{ServerIP}}"
-					],
-					"port": "5000",
-					"path": [
-						"getResolution"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "CaptureImage",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"files\": [\r\n        \"pi_2023_12_30_01:27:32.jpg\",\r\n        \"pi_2023_12_30_01:04:24.jpg\",\r\n        \"pi_2023_12_30_01:12:33.jpg\",\r\n        \"pi_2023_12_30_01:14:10.jpg\",\r\n        \"pi_2023_12_30_01:27:30.jpg\",\r\n        \"pi_2023_12_30_01:30:17.jpg\",\r\n        \"pi_2023_12_30_01:27:31.jpg\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://{{ServerIP}}:5000/imageCapture",
 					"protocol": "http",
@@ -64,6 +54,25 @@
 					"port": "5000",
 					"path": [
 						"imageCapture"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "triggerPredict",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{ServerIP}}:5000/predict",
+					"protocol": "http",
+					"host": [
+						"{{ServerIP}}"
+					],
+					"port": "5000",
+					"path": [
+						"predict"
 					]
 				}
 			},
@@ -89,6 +98,25 @@
 			"response": []
 		},
 		{
+			"name": "ListFiles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ServerIP}}:5000/listFiles",
+					"protocol": "http",
+					"host": [
+						"{{ServerIP}}"
+					],
+					"port": "5000",
+					"path": [
+						"listFiles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "DownloadImages",
 			"request": {
 				"method": "GET",
@@ -108,6 +136,25 @@
 							"key": "filename",
 							"value": "pi_2023_12_30_10:26:31.jpg"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetResolution",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ServerIP}}:5000/getResolution",
+					"protocol": "http",
+					"host": [
+						"{{ServerIP}}"
+					],
+					"port": "5000",
+					"path": [
+						"getResolution"
 					]
 				}
 			},
