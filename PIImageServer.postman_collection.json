@@ -38,7 +38,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"files\": [\r\n        \"pi_2023_12_30_01:27:32.jpg\",\r\n        \"pi_2023_12_30_01:04:24.jpg\",\r\n        \"pi_2023_12_30_01:12:33.jpg\",\r\n        \"pi_2023_12_30_01:14:10.jpg\",\r\n        \"pi_2023_12_30_01:27:30.jpg\",\r\n        \"pi_2023_12_30_01:30:17.jpg\",\r\n        \"pi_2023_12_30_01:27:31.jpg\"\r\n    ]\r\n}",
+					"raw": "{\r\n  \"location\": {\r\n    \"longitude\": 12.9714,\r\n    \"latitude\": 77.5946\r\n  }\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -54,6 +54,40 @@
 					"port": "5000",
 					"path": [
 						"imageCapture"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateMetadata",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"age\": 30,\r\n  \"city\": \"New York\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ServerIP}}:5000/updateMetadata?filename=pi2024_01_20_22:44:22_metadata",
+					"protocol": "http",
+					"host": [
+						"{{ServerIP}}"
+					],
+					"port": "5000",
+					"path": [
+						"updateMetadata"
+					],
+					"query": [
+						{
+							"key": "filename",
+							"value": "pi2024_01_20_22:44:22_metadata"
+						}
 					]
 				}
 			},
