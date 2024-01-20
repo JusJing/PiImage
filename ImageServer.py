@@ -142,8 +142,32 @@ async def predict():
         return jsonify({'status': 'predict triggered'})
      except Exception as e:
         return jsonify({'status': 'error', 'error_message': str(e)})
-         
-    
+
+def update_json_file(file_path,jsonObj):
+    print(file_path)
+    data = {}
+    if Path(file_path).exists():
+        with open(file_path, 'r') as file:
+            data = json.load(file)               
+    for key, value in jsonObj:
+        data[key] = str(value)
+    save_metadata(file_path,data)
+
+@app.route('/editMetadata', methods=['POST'])
+def editMetadata():
+     try:
+        # Specify the command you want to run asynchronously
+        filename = request.args.get('filename')
+        metadata_filename = IMAGE_DIRECTORY + "/"+ filename
+        print(metadata_filename)
+        # If the data is JSON, you can parse it using request.get_json()
+        json_data = request.get_json()
+        update_json_file(metadata_filename,json_data)
+        return jsonify({'status': 'update metadata successfully'})
+     except Exception as e:
+        return jsonify({'status': 'error', 'error_message': str(e)})
+
+
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0', port=5000)
 
