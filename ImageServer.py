@@ -48,7 +48,7 @@ def call_external_program():
     # If the data is JSON, you can parse it using request.get_json()
     json_data = request.get_json()
     now = datetime.now()
-    date_time = now.strftime("%Y_%m_%d_%H:%M:%S")
+    date_time = now.strftime("%Y_%m_%d_%H_%M_%S")
     image_filename = "pi" + date_time + ".jpg"
     metadata_filename = IMAGE_DIRECTORY + "/pi" + date_time + metadata_suffix
     save_metadata(metadata_filename,json_data)
