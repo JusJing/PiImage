@@ -54,7 +54,8 @@ def call_external_program():
     save_metadata(metadata_filename,json_data)
     capture_image_parameter = '-f ' + image_filename
     try:
-        result = subprocess.check_output(['python3', 'ImageCapture.py',capture_image_parameter], universal_newlines=True)
+        python_home = os.getenv('PYTHON_HOME')
+        result = subprocess.check_output([python_home + 'bin/python3', 'ImageCapture.py',capture_image_parameter], universal_newlines=True)
         return jsonify({'status': 'success'})
     except Exception as e:
         return jsonify({'status': 'error', 'error_message': str(e)})
